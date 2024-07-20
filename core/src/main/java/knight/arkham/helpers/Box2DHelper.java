@@ -49,6 +49,20 @@ public class Box2DHelper {
         return box2DBody.world.createBody(bodyDef);
     }
 
+    public static void createLightBounds(Box2DBody box2DBody) {
+
+        PolygonShape shape = new PolygonShape();
+
+        FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
+
+        Body body = createBox2DBodyByType(box2DBody);
+
+        fixtureDef.filter.categoryBits = LIGHT_BOUNDS_BIT;
+        fixtureDef.isSensor = true;
+
+        body.createFixture(fixtureDef);
+    }
+
     public static Body createBody(Box2DBody box2DBody) {
 
         PolygonShape shape = new PolygonShape();
@@ -105,7 +119,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | BOX_BIT | CHECKPOINT_BIT | FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | BOX_BIT | CHECKPOINT_BIT | FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | LIGHT_BOUNDS_BIT);
 
         fixtureDef.friction = 1;
 

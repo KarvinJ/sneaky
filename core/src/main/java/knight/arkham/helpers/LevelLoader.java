@@ -47,7 +47,7 @@ public class LevelLoader {
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
 
-        lightManager = new LightManager(world, .2f);
+        lightManager = new LightManager(world, .1f);
 
         player = new Player(new Rectangle(20, 65, 32, 32), world, atlas);
 
@@ -115,6 +115,10 @@ public class LevelLoader {
 
                 case "Enemy-Stopper":
                     Box2DHelper.createFixture(new Box2DBody(mapRectangle, world, null));
+                    break;
+
+                case "Light-Bounds":
+                    Box2DHelper.createLightBounds(new Box2DBody(mapRectangle, world, null));
                     break;
 
                 default:

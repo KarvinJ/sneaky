@@ -16,6 +16,7 @@ import static knight.arkham.helpers.AssetsHelper.loadSound;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Enemy extends GameObject {
+
     private final Animation<TextureRegion> movingAnimation;
     private float animationTimer;
     public boolean isMovingRight;

@@ -9,6 +9,6 @@ import static knight.arkham.helpers.Box2DHelper.createBody;
 public class Door {
 
     public Door(Rectangle bounds, World world) {
-        createBody(new Box2DBody(bounds, 0, world, this));
+        createBody(new Box2DBody(bounds, world, this));
     }
 }

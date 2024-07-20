@@ -28,11 +28,6 @@ public class GameContactListener implements ContactListener {
                     ((Checkpoint) fixtureB.getUserData()).createCheckpoint();
                 break;
 
-            case PLAYER_BIT | DOOR_BIT:
-
-                TileMapHelper.canChangePlayer = true;
-                break;
-
             case PLAYER_BIT | ENEMY_HEAD_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == ENEMY_HEAD_BIT)
@@ -69,18 +64,7 @@ public class GameContactListener implements ContactListener {
     }
 
     @Override
-    public void endContact(Contact contact) {
-
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
-
-        int collisionBits = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
-
-        short collisionPlayerWithDoor = PLAYER_BIT | DOOR_BIT;
-
-        if (collisionBits == collisionPlayerWithDoor)
-            TileMapHelper.canChangePlayer = false;
-    }
+    public void endContact(Contact contact) {}
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {}

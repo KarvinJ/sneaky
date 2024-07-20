@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
 import knight.arkham.objects.Box;
 import knight.arkham.objects.structures.Checkpoint;
@@ -23,22 +24,21 @@ import knight.arkham.objects.structures.Door;
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 import static knight.arkham.helpers.Constants.TIME_STEP;
-import static knight.arkham.helpers.GameDataHelper.saveGameData;
+import static knight.arkham.helpers.GameDataHelper.savePlayerPosition;
 
 public class TileMapHelper {
+
     private final TiledMap tiledMap;
     private final TextureAtlas atlas;
     private final World world;
-    private final Box2DDebugRenderer debugRenderer;
+    private final Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
-    private Player alterPlayer;
     private final LightManager lightManager;
-    private final WorldObjectsManager worldObjects;
     private float accumulator;
-    private boolean isAlterPlayerActive;
     public boolean isDebugCameraActive;
-    public static boolean canChangePlayer;
+    private final Array<GameObject> gameObjects;
+    private final Array<Checkpoint> checkpoints;
 
     public TileMapHelper(String mapFilePath, String atlasFilePath) {
 
@@ -52,12 +52,12 @@ public class TileMapHelper {
 
         player = new Player(new Rectangle(20, 65, 32, 32), world, atlas);
 
-        saveGameData(new GameData("first", player.getWorldPosition()));
+        savePlayerPosition(player.getWorldPosition());
 
-        worldObjects = new WorldObjectsManager();
+        gameObjects = new Array<>();
+        checkpoints = new Array<>();
 
         mapRenderer = setupMap();
-        debugRenderer = new Box2DDebugRenderer();
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -79,17 +79,17 @@ public class TileMapHelper {
                 case "Enemies":
 
                     if (mapObject.getName().equals("blob"))
-                        worldObjects.createGameObject(new Enemy(mapRectangle, world, atlas.findRegion("enemy"), 2));
+                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("enemy"), 2));
                     else
-                        worldObjects.createGameObject(new Enemy(mapRectangle, world, atlas.findRegion("snake"), 2));
+                        gameObjects.add(new Enemy(mapRectangle, world, atlas.findRegion("snake"), 2));
                     break;
 
                 case "Animals":
 
                     if (mapObject.getName().equals("cat"))
-                        worldObjects.createGameObject(new Animal(mapRectangle, world, atlas.findRegion("cat"), 3));
+                        gameObjects.add(new Animal(mapRectangle, world, atlas.findRegion("cat"), 3));
                     else
-                        worldObjects.createGameObject(new Animal(mapRectangle, world, atlas.findRegion("bats"), 2));
+                        gameObjects.add(new Animal(mapRectangle, world, atlas.findRegion("bats"), 2));
                     break;
 
                 case "Lights":
@@ -103,7 +103,7 @@ public class TileMapHelper {
                     break;
 
                 case "Checkpoints":
-                    worldObjects.createCheckpoint(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint")));
+                    checkpoints.add(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint")));
                     break;
 
                 case "Doors":
@@ -111,13 +111,9 @@ public class TileMapHelper {
                     break;
 
                 case "Boxes":
-                    worldObjects.createGameObject(new Box(mapRectangle, world));
+                    gameObjects.add(new Box(mapRectangle, world));
                     break;
 
-                case "Alter-Player":
-                    alterPlayer = new Player(mapRectangle, world, atlas);
-                    break;
-//                    Since I don't need the userData of these bodies, the userData could be null.
                 case "Enemy-Stopper":
                     Box2DHelper.createFixture(new Box2DBody(mapRectangle, world, null));
                     break;
@@ -129,7 +125,7 @@ public class TileMapHelper {
         }
     }
 
-    private Rectangle getTileMapRectangle(Rectangle rectangle){
+    private Rectangle getTileMapRectangle(Rectangle rectangle) {
         return new Rectangle(
             rectangle.x + rectangle.width / 2,
             rectangle.y + rectangle.height / 2,
@@ -139,30 +135,23 @@ public class TileMapHelper {
 
     public void update(float deltaTime, OrthographicCamera camera) {
 
-        if (canChangePlayer && Gdx.input.isKeyJustPressed(Input.Keys.W))
-            isAlterPlayerActive = !isAlterPlayerActive;
-
-        if (isAlterPlayerActive)
-            alterPlayer.update(deltaTime);
-        else
-            player.update(deltaTime);
+        player.update(deltaTime);
 
         controlCameraPosition(camera);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
             isDebugCameraActive = !isDebugCameraActive;
 
-        if (!isDebugCameraActive) {
-
-            if (isAlterPlayerActive)
-                camera.position.set(alterPlayer.getWorldPosition().x, 5.2f, 0);
-            else
-                camera.position.set(player.getWorldPosition().x, 5.2f, 0);
-        }
+        if (!isDebugCameraActive)
+            camera.position.set(player.getWorldPosition().x, 5.2f, 0);
 
         camera.update();
 
-        worldObjects.update(deltaTime);
+        for (GameObject gameObject : gameObjects)
+            gameObject.update(deltaTime);
+
+        for (Checkpoint checkpoint : checkpoints)
+            checkpoint.update(deltaTime);
 
         lightManager.update(deltaTime, player);
 
@@ -175,13 +164,13 @@ public class TileMapHelper {
 
         accumulator += frameTime;
 
-        while(accumulator >= TIME_STEP) {
-            world.step(TIME_STEP, 6,2);
+        while (accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
     }
 
-    public void draw(OrthographicCamera camera){
+    public void draw(OrthographicCamera camera) {
 
         mapRenderer.setView(camera);
         mapRenderer.render();
@@ -192,18 +181,19 @@ public class TileMapHelper {
 
         player.draw(mapRenderer.getBatch());
 
-        if (alterPlayer != null)
-            alterPlayer.draw(mapRenderer.getBatch());
+        for (GameObject gameObject : gameObjects)
+            gameObject.draw(mapRenderer.getBatch());
 
-        worldObjects.draw(mapRenderer.getBatch());
+        for (Checkpoint checkpoint : checkpoints)
+            checkpoint.draw(mapRenderer.getBatch());
 
         mapRenderer.getBatch().end();
 
-        lightManager.draw(camera, isAlterPlayerActive);
+        lightManager.draw(camera);
 //        debugRenderer.render(world, camera.combined);
     }
 
-    public void dispose(){
+    public void dispose() {
 
         player.dispose();
         tiledMap.dispose();
@@ -212,6 +202,11 @@ public class TileMapHelper {
         world.dispose();
         debugRenderer.dispose();
         lightManager.dispose();
-        worldObjects.dispose();
+
+        for (GameObject gameObject : gameObjects)
+            gameObject.dispose();
+
+        for (Checkpoint checkpoint : checkpoints)
+            checkpoint.dispose();
     }
 }

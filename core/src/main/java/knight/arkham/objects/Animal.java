@@ -12,6 +12,7 @@ import static knight.arkham.helpers.AnimationHelper.makeAnimation;
 import static knight.arkham.helpers.Box2DHelper.createBody;
 
 public class Animal extends GameObject {
+
     private final Animation<TextureRegion> animation;
     private float animationTimer;
 

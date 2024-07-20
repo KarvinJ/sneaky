@@ -7,6 +7,7 @@ import knight.arkham.Dark;
 import knight.arkham.helpers.TileMapHelper;
 
 public class GameScreen extends ScreenAdapter {
+
     private final Dark game;
     private final OrthographicCamera camera;
     private final TileMapHelper mapHelper;
@@ -17,7 +18,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        mapHelper = new TileMapHelper("maps/level3.tmx", "images/test.atlas");
+        mapHelper = new TileMapHelper("maps/level1.tmx", "images/test.atlas");
     }
 
     @Override

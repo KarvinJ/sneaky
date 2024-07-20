@@ -1,6 +1,7 @@
 package knight.arkham.helpers;
 
 public class Constants {
+
     public static final float PIXELS_PER_METER = 32f;
     public static final float TIME_STEP = 1/240f;
     public static final short GROUND_BIT = 1;

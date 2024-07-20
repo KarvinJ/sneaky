@@ -2,6 +2,7 @@ package knight.arkham.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,6 +17,7 @@ import knight.arkham.Dark;
 import knight.arkham.helpers.AssetsHelper;
 
 public class MainMenuScreen extends ScreenAdapter {
+
     private final Dark game;
     private final Skin skin;
     private final Stage stage;
@@ -26,7 +28,13 @@ public class MainMenuScreen extends ScreenAdapter {
 
         game = Dark.INSTANCE;
 
-        skin = AssetsHelper.loadUiSkin();
+        AssetManager assetManager = new AssetManager();
+
+        assetManager.load(game.uiSkin);
+
+        assetManager.finishLoading();
+
+        skin = assetManager.get(game.uiSkin);
 
         viewport = new ExtendViewport(game.screenWidth, game.screenHeight);
 

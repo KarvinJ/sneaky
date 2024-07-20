@@ -12,6 +12,7 @@ import static knight.arkham.helpers.Box2DHelper.getDrawBounds;
 import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 
 public abstract class InteractiveStructure {
+
     protected final Rectangle actualBounds;
     protected final World actualWorld;
     protected TextureRegion actualRegion;

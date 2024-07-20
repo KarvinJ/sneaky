@@ -11,12 +11,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import knight.arkham.screens.GameScreen;
 
 public class Dark extends Game {
+
     public static Dark INSTANCE;
     public OrthographicCamera camera;
+    public AssetDescriptor<Skin> uiSkin;
     public Viewport viewport;
     public int screenWidth;
     public int screenHeight;
-    public AssetDescriptor<Skin> uiSkin;
 
     public Dark() {
 

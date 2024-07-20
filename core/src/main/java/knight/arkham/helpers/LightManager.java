@@ -15,6 +15,7 @@ import static com.badlogic.gdx.graphics.Color.WHITE;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class LightManager {
+
     public final RayHandler rayHandler;
     private final Array<ConeLight> coneLights;
     private final Array<PointLight> pointLights;
@@ -48,7 +49,6 @@ public class LightManager {
     }
 
     public void update(float deltaTime, Player player) {
-
         //I also have call the rayHandler update method for everything to work accordingly.
         rayHandler.update();
 
@@ -71,13 +71,12 @@ public class LightManager {
         }
     }
 
-    public void draw(OrthographicCamera camera, boolean isAlterPlayerActive) {
+    public void draw(OrthographicCamera camera) {
 
-        if (!isAlterPlayerActive) {
-            rayHandler.setCombinedMatrix(camera);
-            //The render method of the rayHandler should be put after all the others objects
-            rayHandler.render();
-        }
+        rayHandler.setCombinedMatrix(camera);
+        //The render method of the rayHandler should be put after all the others objects
+        rayHandler.render();
+
     }
 
     public void dispose() {

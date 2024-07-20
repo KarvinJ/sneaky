@@ -23,7 +23,6 @@ public class GameContactListener implements ContactListener {
 
                 if (fixtureA.getFilterData().categoryBits == CHECKPOINT_BIT)
                     ((Checkpoint) fixtureA.getUserData()).createCheckpoint();
-
                 else
                     ((Checkpoint) fixtureB.getUserData()).createCheckpoint();
                 break;
@@ -32,7 +31,6 @@ public class GameContactListener implements ContactListener {
 
                 if (fixtureA.getFilterData().categoryBits == ENEMY_HEAD_BIT)
                     ((Enemy) fixtureA.getUserData()).hitByPlayer();
-
                 else
                     ((Enemy) fixtureB.getUserData()).hitByPlayer();
                 break;
@@ -44,7 +42,6 @@ public class GameContactListener implements ContactListener {
                     ((Player) fixtureA.getUserData()).hitByEnemy();
                     ((Enemy) fixtureB.getUserData()).changeDirection();
                 }
-
                 else {
 
                     ((Player) fixtureB.getUserData()).hitByEnemy();
@@ -56,7 +53,6 @@ public class GameContactListener implements ContactListener {
 
                 if (fixtureA.getFilterData().categoryBits == ENEMY_BIT)
                     ((Enemy) fixtureA.getUserData()).changeDirection();
-
                 else
                     ((Enemy) fixtureB.getUserData()).changeDirection();
                 break;

@@ -23,10 +23,9 @@ import knight.arkham.objects.structures.Door;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
-import static knight.arkham.helpers.Constants.TIME_STEP;
 import static knight.arkham.helpers.GameDataHelper.savePlayerPosition;
 
-public class TileMapHelper {
+public class LevelLoader {
 
     private final TiledMap tiledMap;
     private final TextureAtlas atlas;
@@ -40,10 +39,10 @@ public class TileMapHelper {
     private final Array<GameObject> gameObjects;
     private final Array<Checkpoint> checkpoints;
 
-    public TileMapHelper(String mapFilePath, String atlasFilePath) {
+    public LevelLoader(String mapFilePath) {
 
         tiledMap = new TmxMapLoader().load(mapFilePath);
-        atlas = new TextureAtlas(atlasFilePath);
+        atlas = new TextureAtlas("images/test.atlas");
 
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
@@ -164,6 +163,7 @@ public class TileMapHelper {
 
         accumulator += frameTime;
 
+        float TIME_STEP = 1 / 240f;
         while (accumulator >= TIME_STEP) {
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;

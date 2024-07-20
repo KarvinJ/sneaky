@@ -4,13 +4,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Dark;
-import knight.arkham.helpers.TileMapHelper;
+import knight.arkham.helpers.LevelLoader;
 
 public class GameScreen extends ScreenAdapter {
 
     private final Dark game;
     private final OrthographicCamera camera;
-    private final TileMapHelper mapHelper;
+    private final LevelLoader mapHelper;
 
     public GameScreen() {
 
@@ -18,7 +18,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        mapHelper = new TileMapHelper("maps/level1.tmx", "images/test.atlas");
+        mapHelper = new LevelLoader("maps/level1.tmx");
     }
 
     @Override

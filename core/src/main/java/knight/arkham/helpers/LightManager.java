@@ -19,7 +19,7 @@ public class LightManager {
     public final RayHandler rayHandler;
     private final Array<ConeLight> coneLights;
     private final Array<PointLight> pointLights;
-    private float lightsTimer;
+    public boolean areConeLightsOn;
 
     public LightManager(World world, float ambientLightIntensity) {
 
@@ -48,18 +48,17 @@ public class LightManager {
         pointLights.add(pointLight);
     }
 
-    public void update(float deltaTime, Player player) {
+    public void update(float lightsTimer, Player player) {
         //I also have call the rayHandler update method for everything to work accordingly.
         rayHandler.update();
 
-        lightsTimer += deltaTime;
-
         if (lightsTimer > 2) {
 
-            lightsTimer = 0;
-
-            for (ConeLight light : coneLights)
+            for (ConeLight light : coneLights) {
                 light.setActive(!light.isActive());
+
+                areConeLightsOn = light.isActive();
+            }
         }
 
         for (PointLight light : pointLights) {

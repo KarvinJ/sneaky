@@ -8,6 +8,7 @@ import knight.arkham.objects.structures.Door;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
+import knight.arkham.objects.structures.LightStructure;
 
 import static knight.arkham.helpers.Constants.*;
 
@@ -21,6 +22,9 @@ public class Box2DHelper {
 
         if (box2DBody.userData instanceof Checkpoint)
             fixtureDef.filter.categoryBits = CHECKPOINT_BIT;
+
+        else if (box2DBody.userData instanceof LightStructure)
+            fixtureDef.filter.categoryBits = LIGHT_BOUNDS_BIT;
 
         else
             fixtureDef.filter.categoryBits = STOP_ENEMY_BIT;
@@ -47,20 +51,6 @@ public class Box2DHelper {
         bodyDef.fixedRotation = true;
 
         return box2DBody.world.createBody(bodyDef);
-    }
-
-    public static void createLightBounds(Box2DBody box2DBody) {
-
-        PolygonShape shape = new PolygonShape();
-
-        FixtureDef fixtureDef = createBoxFixtureDef(box2DBody, shape);
-
-        Body body = createBox2DBodyByType(box2DBody);
-
-        fixtureDef.filter.categoryBits = LIGHT_BOUNDS_BIT;
-        fixtureDef.isSensor = true;
-
-        body.createFixture(fixtureDef);
     }
 
     public static Body createBody(Box2DBody box2DBody) {
@@ -152,7 +142,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | STOP_ENEMY_BIT | ENEMY_BIT | PLAYER_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | STOP_ENEMY_BIT | ENEMY_BIT | PLAYER_BIT | LIGHT_BOUNDS_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 

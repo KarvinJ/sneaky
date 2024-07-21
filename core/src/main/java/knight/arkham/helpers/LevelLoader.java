@@ -20,6 +20,7 @@ import knight.arkham.objects.*;
 import knight.arkham.objects.Box;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.Door;
+import knight.arkham.objects.structures.LightStructure;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
@@ -34,10 +35,12 @@ public class LevelLoader {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
     private final LightManager lightManager;
+    private float lightsTimer;
     private float accumulator;
     public boolean isDebugCameraActive;
     private final Array<GameObject> gameObjects;
     private final Array<Checkpoint> checkpoints;
+    private final Array<LightStructure> lightStructures;
 
     public LevelLoader(String mapFilePath) {
 
@@ -47,14 +50,15 @@ public class LevelLoader {
         world = new World(new Vector2(0, -40), true);
         world.setContactListener(new GameContactListener());
 
-        lightManager = new LightManager(world, .1f);
+        lightManager = new LightManager(world, .2f);
 
-        player = new Player(new Rectangle(20, 65, 32, 32), world, atlas);
+        player = new Player(new Rectangle(500, 65, 32, 32), world, atlas);
 
         savePlayerPosition(player.getWorldPosition());
 
         gameObjects = new Array<>();
         checkpoints = new Array<>();
+        lightStructures = new Array<>();
 
         mapRenderer = setupMap();
     }
@@ -117,8 +121,8 @@ public class LevelLoader {
                     Box2DHelper.createFixture(new Box2DBody(mapRectangle, world, null));
                     break;
 
-                case "Light-Bounds":
-                    Box2DHelper.createLightBounds(new Box2DBody(mapRectangle, world, null));
+                case "Light-Collisions":
+                    lightStructures.add(new LightStructure(mapRectangle, world));
                     break;
 
                 default:
@@ -156,7 +160,19 @@ public class LevelLoader {
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.update(deltaTime);
 
-        lightManager.update(deltaTime, player);
+        lightsTimer += deltaTime;
+
+        for (LightStructure lightStructure : lightStructures) {
+
+            lightStructure.shouldHaveDeathCollision = lightManager.areConeLightsOn;
+            lightStructure.update();
+        }
+
+        lightManager.update(lightsTimer, player);
+
+        if (lightsTimer > 2) {
+            lightsTimer = 0;
+        }
 
         doPhysicsTimeStep(deltaTime);
     }

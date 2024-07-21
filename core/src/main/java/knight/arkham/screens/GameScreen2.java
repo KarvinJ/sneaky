@@ -7,13 +7,13 @@ import knight.arkham.Dark;
 import knight.arkham.helpers.Constants;
 import knight.arkham.helpers.LevelLoader;
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen2 extends ScreenAdapter {
 
     private final Dark game;
     private final OrthographicCamera camera;
     private final LevelLoader mapHelper;
 
-    public GameScreen() {
+    public GameScreen2() {
 
         Constants.ShouldChangeLevel = false;
 
@@ -21,7 +21,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        mapHelper = new LevelLoader("maps/level0.tmx");
+        mapHelper = new LevelLoader("maps/level2.tmx");
     }
 
     @Override
@@ -33,7 +33,7 @@ public class GameScreen extends ScreenAdapter {
     public void render(float deltaTime) {
 
         if (Constants.ShouldChangeLevel)
-            game.setScreen(new GameScreen2());
+            game.setScreen(new GameScreen3());
 
         else {
 

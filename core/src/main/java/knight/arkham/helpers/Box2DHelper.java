@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Animal;
-import knight.arkham.objects.structures.Door;
+import knight.arkham.objects.structures.FinishDoor;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
@@ -73,7 +73,7 @@ public class Box2DHelper {
             body.createFixture(fixtureDef);
         }
 
-        else if (box2DBody.userData instanceof Door) {
+        else if (box2DBody.userData instanceof FinishDoor) {
 
             fixtureDef.filter.categoryBits = DOOR_BIT;
             fixtureDef.isSensor = true;
@@ -109,7 +109,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | BOX_BIT | CHECKPOINT_BIT | FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | LIGHT_BOUNDS_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | BOX_BIT | CHECKPOINT_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | LIGHT_BOUNDS_BIT);
 
         fixtureDef.friction = 1;
 

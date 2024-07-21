@@ -2,6 +2,7 @@ package knight.arkham.helpers;
 
 public class Constants {
 
+    public static boolean ShouldChangeLevel = false;
     public static final float PIXELS_PER_METER = 32f;
     public static final short GROUND_BIT = 1;
     public static final short PLAYER_BIT = 2;
@@ -11,7 +12,6 @@ public class Constants {
     public static final short ANIMAL_BIT = 32;
     public static final short ENEMY_BIT = 64;
     public static final short ENEMY_HEAD_BIT = 128;
-    public static final short FINISH_BIT = 256;
     public static final short PLAYER_HEAD_BIT = 512;
     public static final short DOOR_BIT = 1024;
     public static final short BOX_BIT = 2048;

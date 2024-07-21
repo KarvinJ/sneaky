@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.*;
 import knight.arkham.objects.Box;
 import knight.arkham.objects.structures.Checkpoint;
-import knight.arkham.objects.structures.Door;
+import knight.arkham.objects.structures.FinishDoor;
 import knight.arkham.objects.structures.LightStructure;
 
 import static knight.arkham.helpers.CameraController.controlCameraPosition;
@@ -52,7 +52,7 @@ public class LevelLoader {
 
         lightManager = new LightManager(world, .2f);
 
-        player = new Player(new Rectangle(500, 65, 32, 32), world, atlas);
+        player = new Player(new Rectangle(100, 65, 32, 32), world, atlas);
 
         savePlayerPosition(player.getWorldPosition());
 
@@ -109,8 +109,8 @@ public class LevelLoader {
                     checkpoints.add(new Checkpoint(mapRectangle, world, atlas.findRegion("checkpoint")));
                     break;
 
-                case "Doors":
-                    new Door(mapRectangle, world);
+                case "Finish":
+                    new FinishDoor(mapRectangle, world);
                     break;
 
                 case "Boxes":

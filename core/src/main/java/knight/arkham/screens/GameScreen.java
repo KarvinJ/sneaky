@@ -24,7 +24,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        mapHelper = new LevelLoader("maps/level0.tmx");
+        mapHelper = new LevelLoader("maps/level1.tmx");
 
         music = AssetsHelper.loadMusic("peaceful.wav");
         music.play();

@@ -65,6 +65,11 @@ public class GameContactListener implements ContactListener {
                     ((Enemy) fixtureB.getUserData()).changeDirection();
                 break;
 
+            case ENEMY_BIT :
+                    ((Enemy) fixtureA.getUserData()).changeDirection();
+                    ((Enemy) fixtureB.getUserData()).changeDirection();
+                break;
+
             case PLAYER_BIT | DOOR_BIT:
                  ShouldChangeLevel = true;
                 break;

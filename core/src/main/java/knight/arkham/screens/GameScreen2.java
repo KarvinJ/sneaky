@@ -1,9 +1,11 @@
 package knight.arkham.screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.Dark;
+import knight.arkham.helpers.AssetsHelper;
 import knight.arkham.helpers.Constants;
 import knight.arkham.helpers.LevelLoader;
 
@@ -12,6 +14,7 @@ public class GameScreen2 extends ScreenAdapter {
     private final Dark game;
     private final OrthographicCamera camera;
     private final LevelLoader mapHelper;
+    private final Music music;
 
     public GameScreen2() {
 
@@ -22,6 +25,10 @@ public class GameScreen2 extends ScreenAdapter {
         camera = game.camera;
 
         mapHelper = new LevelLoader("maps/level2.tmx");
+        music = AssetsHelper.loadMusic("peaceful.wav");
+        music.play();
+//        music.setVolume(0.2f);
+        music.setLooping(true);
     }
 
     @Override
@@ -52,6 +59,8 @@ public class GameScreen2 extends ScreenAdapter {
 
     @Override
     public void dispose() {
+
         mapHelper.dispose();
+        music.dispose();
     }
 }

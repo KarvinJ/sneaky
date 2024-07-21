@@ -71,7 +71,7 @@ public class Player extends GameObject {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0) {
 
-            applyLinealImpulse(new Vector2(0, 120));
+            applyLinealImpulse(new Vector2(0, 130));
             jumpSound.play();
         }
     }

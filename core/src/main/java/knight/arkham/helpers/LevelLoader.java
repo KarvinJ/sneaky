@@ -2,6 +2,7 @@ package knight.arkham.helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayer;
@@ -101,8 +102,10 @@ public class LevelLoader {
 
                     if (mapObject.getName().equals("cone"))
                         lightManager.createConeLight(lightPosition, -90, 30);
+                    else if (mapObject.getName().equals("point"))
+                        lightManager.createPointLight(lightPosition, 5, Color.WHITE);
                     else
-                        lightManager.createPointLight(lightPosition, 5);
+                        lightManager.createPointLight(lightPosition, 10, Color.CORAL);
                     break;
 
                 case "Checkpoints":

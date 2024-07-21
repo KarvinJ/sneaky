@@ -5,6 +5,7 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -39,11 +40,11 @@ public class LightManager {
         coneLights.add(coneLight);
     }
 
-    public void createPointLight(Vector2 position, float distance) {
+    public void createPointLight(Vector2 position, float distance, Color color) {
 
         position.scl(1 / PIXELS_PER_METER);
 
-        PointLight pointLight = new PointLight(rayHandler, 10, WHITE, distance, position.x, position.y);
+        PointLight pointLight = new PointLight(rayHandler, 10, color, distance, position.x, position.y);
 
         pointLights.add(pointLight);
     }

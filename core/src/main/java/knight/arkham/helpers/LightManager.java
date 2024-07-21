@@ -52,11 +52,11 @@ public class LightManager {
         //I also have call the rayHandler update method for everything to work accordingly.
         rayHandler.update();
 
-        if (lightsTimer > 2) {
+        if (lightsTimer > 1.5f) {
 
             for (ConeLight light : coneLights) {
-                light.setActive(!light.isActive());
 
+                light.setActive(!light.isActive());
                 areConeLightsOn = light.isActive();
             }
         }

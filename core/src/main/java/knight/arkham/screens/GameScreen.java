@@ -18,7 +18,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        mapHelper = new LevelLoader("maps/level2.tmx");
+        mapHelper = new LevelLoader("maps/level0.tmx");
     }
 
     @Override

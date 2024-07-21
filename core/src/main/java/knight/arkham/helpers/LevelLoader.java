@@ -170,7 +170,7 @@ public class LevelLoader {
 
         lightManager.update(lightsTimer, player);
 
-        if (lightsTimer > 2) {
+        if (lightsTimer > 1.5f) {
             lightsTimer = 0;
         }
 

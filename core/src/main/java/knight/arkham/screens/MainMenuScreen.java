@@ -64,7 +64,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         Gdx.input.setInputProcessor(stage);
 
-        music = AssetsHelper.loadMusic("pixel3.mp3");
+        music = AssetsHelper.loadMusic("peaceful.wav");
 
         music.play();
         music.setVolume(0.2f);

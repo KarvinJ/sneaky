@@ -84,7 +84,6 @@ public class Box2DHelper {
         else {
 
             fixtureDef.filter.categoryBits = GROUND_BIT;
-
             body.createFixture(fixtureDef);
         }
 
@@ -108,9 +107,7 @@ public class Box2DHelper {
     private static void createPlayerBody(Box2DBody box2DBody, FixtureDef fixtureDef, Body body) {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
-
         fixtureDef.filter.maskBits = (short) (GROUND_BIT | DOOR_BIT | BOX_BIT | CHECKPOINT_BIT | ENEMY_BIT | ENEMY_HEAD_BIT | LIGHT_BOUNDS_BIT);
-
         fixtureDef.friction = 1;
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);

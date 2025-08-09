@@ -23,7 +23,6 @@ import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishDoor;
 import knight.arkham.objects.structures.LightStructure;
 
-import static knight.arkham.helpers.CameraController.controlCameraPosition;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 import static knight.arkham.helpers.GameDataHelper.savePlayerPosition;
 
@@ -64,10 +63,12 @@ public class LevelLoader {
         mapRenderer = setupMap();
     }
 
-    public OrthogonalTiledMapRenderer setupMap() {
+    private OrthogonalTiledMapRenderer setupMap() {
 
-        for (MapLayer mapLayer : tiledMap.getLayers())
+        for (MapLayer mapLayer : tiledMap.getLayers()) {
+
             parseMapObjectsToBox2DBodies(mapLayer.getObjects(), mapLayer.getName());
+        }
 
         return new OrthogonalTiledMapRenderer(tiledMap, 1 / PIXELS_PER_METER);
     }
@@ -143,17 +144,38 @@ public class LevelLoader {
         );
     }
 
+    private void controlCameraPosition(OrthographicCamera camera) {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+            camera.position.x += 0.5f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+            camera.position.x -= 0.5f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+            camera.position.y += 0.5f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            camera.position.y -= 0.5f;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
+            camera.zoom += 0.1f;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
+            camera.zoom -= 0.1f;
+    }
+
     public void update(float deltaTime, OrthographicCamera camera) {
 
         player.update(deltaTime);
-
-        controlCameraPosition(camera);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
             isDebugCameraActive = !isDebugCameraActive;
 
         if (!isDebugCameraActive)
             camera.position.set(player.getWorldPosition().x, 5.2f, 0);
+
+        controlCameraPosition(camera);
 
         camera.update();
 
@@ -188,6 +210,7 @@ public class LevelLoader {
 
         float TIME_STEP = 1 / 240f;
         while (accumulator >= TIME_STEP) {
+
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }

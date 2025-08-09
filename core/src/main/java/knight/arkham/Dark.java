@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import knight.arkham.screens.MainMenuScreen;
 
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
+
 public class Dark extends Game {
 
     public static Dark INSTANCE;
@@ -32,11 +34,15 @@ public class Dark extends Game {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
-        viewport = new FitViewport(screenWidth / 32f, screenHeight / 32f, camera);
+        viewport = new FitViewport(
+            screenWidth / PIXELS_PER_METER,
+            screenHeight / PIXELS_PER_METER,
+            camera
+        );
 
         camera.zoom -= 0.4f;
 
-        camera.position.set(screenWidth / 2f / 32f, screenHeight / 2f / 32f, 0);
+        camera.position.set(screenWidth / 2f / PIXELS_PER_METER, screenHeight / 2f / PIXELS_PER_METER, 0);
 
         uiSkin = new AssetDescriptor<>("ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("ui/uiskin.atlas"));
 

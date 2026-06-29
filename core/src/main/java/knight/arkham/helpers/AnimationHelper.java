@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Array;
 
 public class AnimationHelper {
 
-
     public static Animation<TextureRegion> makeAnimation(TextureRegion region, int frameWidth, int frameHeight, int totalFrames, float frameDuration) {
 
         Array<TextureRegion> animationFrames = new Array<>();

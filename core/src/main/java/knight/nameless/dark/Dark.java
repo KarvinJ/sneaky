@@ -1,7 +1,6 @@
 package knight.nameless.dark;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,8 +17,8 @@ public class Dark extends Game {
     public OrthographicCamera camera;
     public AssetDescriptor<Skin> uiSkin;
     public Viewport viewport;
-    public int screenWidth;
-    public int screenHeight;
+    public int screenWidth = 960;
+    public int screenHeight = 544;
 
     public Dark() {
 
@@ -31,9 +30,6 @@ public class Dark extends Game {
 
         camera = new OrthographicCamera();
 
-        screenWidth = Gdx.graphics.getWidth();
-        screenHeight = Gdx.graphics.getHeight();
-
         viewport = new FitViewport(
             screenWidth / PIXELS_PER_METER,
             screenHeight / PIXELS_PER_METER,
@@ -44,7 +40,9 @@ public class Dark extends Game {
 
         camera.position.set(screenWidth / 2f / PIXELS_PER_METER, screenHeight / 2f / PIXELS_PER_METER, 0);
 
-        uiSkin = new AssetDescriptor<>("ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("ui/uiskin.atlas"));
+        uiSkin = new AssetDescriptor<>(
+            "ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("ui/uiskin.atlas")
+        );
 
         setScreen(new MainMenuScreen());
     }

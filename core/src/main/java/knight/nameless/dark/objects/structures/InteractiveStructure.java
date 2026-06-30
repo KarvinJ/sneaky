@@ -18,17 +18,12 @@ public abstract class InteractiveStructure {
     protected TextureRegion actualRegion;
     protected final Fixture fixture;
     protected final Body body;
-    protected final int frameWidth;
-    protected final int frameHeight;
 
     public InteractiveStructure(Rectangle bounds, World world, TextureRegion region) {
 
         actualBounds = bounds;
         actualWorld = world;
         actualRegion = region;
-
-        frameWidth = region.getRegionWidth();
-        frameHeight = region.getRegionHeight();
 
         fixture = createObjectFixture();
         body = fixture.getBody();

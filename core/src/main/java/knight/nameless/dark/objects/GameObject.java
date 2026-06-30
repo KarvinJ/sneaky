@@ -15,17 +15,12 @@ public abstract class GameObject {
     protected final World actualWorld;
     protected TextureRegion actualRegion;
     protected final Body body;
-    protected final int frameWidth;
-    protected final int frameHeight;
 
     protected GameObject(Rectangle bounds, World world, TextureRegion region) {
 
         actualBounds = bounds;
         actualWorld = world;
         actualRegion = region;
-
-        frameWidth = region.getRegionWidth();
-        frameHeight = region.getRegionHeight();
 
         body = createObjectBody();
     }

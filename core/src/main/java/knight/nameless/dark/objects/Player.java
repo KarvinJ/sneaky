@@ -43,7 +43,7 @@ public class Player extends GameObject {
         previousState = AnimationState.STANDING;
         actualState = AnimationState.STANDING;
 
-        jumpingRegion = new TextureRegion(atlas.findRegion("jumping"), 0, 0, frameWidth, frameHeight);
+        jumpingRegion = new TextureRegion(atlas.findRegion("jumping"), 0, 0, 16, 22);
 
         standingAnimation = makeAnimation(atlas.findRegion("smoking"), 6, 0.2f);
         runningAnimation = makeAnimation(atlas.findRegion("walking"), 8, 0.1f);

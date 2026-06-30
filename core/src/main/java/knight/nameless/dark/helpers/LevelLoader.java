@@ -236,6 +236,7 @@ public class LevelLoader {
         mapRenderer.getBatch().end();
 
         lightManager.draw(camera);
+
 //        debugRenderer.render(world, camera.combined);
     }
 

@@ -24,7 +24,7 @@ public class Animal extends GameObject {
             )
         );
 
-        animation = makeAnimation(region, frameWidth, frameHeight, totalFrames, 0.2f);
+        animation = makeAnimation(region, totalFrames, 0.2f);
     }
 
     @Override

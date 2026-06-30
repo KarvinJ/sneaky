@@ -29,7 +29,7 @@ public class Checkpoint extends InteractiveStructure {
             )
         );
 
-        animation = makeAnimation(region, frameWidth, frameHeight, 2, 0.5f);
+        animation = makeAnimation(region, 2, 0.5f);
 
         activationSound = loadSound("okay.wav");
     }

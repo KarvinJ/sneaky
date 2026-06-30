@@ -45,9 +45,9 @@ public class Player extends GameObject {
 
         jumpingRegion = new TextureRegion(atlas.findRegion("jumping"), 0, 0, frameWidth, frameHeight);
 
-        standingAnimation = makeAnimation(atlas.findRegion("smoking"), frameWidth, frameHeight, 6, 0.2f);
-        runningAnimation = makeAnimation(atlas.findRegion("walking"), frameWidth, frameHeight, 8, 0.1f);
-        dyingAnimation = makeAnimation(atlas.findRegion("dying"), frameWidth, frameHeight, 8, 0.1f);
+        standingAnimation = makeAnimation(atlas.findRegion("smoking"), 6, 0.2f);
+        runningAnimation = makeAnimation(atlas.findRegion("walking"), 8, 0.1f);
+        dyingAnimation = makeAnimation(atlas.findRegion("dying"), 8, 0.1f);
 
         jumpSound = loadSound("magic.wav");
         deathSound = loadSound("fall.wav");

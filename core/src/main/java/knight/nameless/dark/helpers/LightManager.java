@@ -46,6 +46,7 @@ public class LightManager {
 
         PointLight pointLight = new PointLight(rayHandler, 10, color, distance, position.x, position.y);
 
+//        pointLight.setActive(false);
         pointLights.add(pointLight);
     }
 
@@ -69,6 +70,11 @@ public class LightManager {
             if (lightPosition.dst(player.getPixelPosition()) < 80 && Gdx.input.isKeyJustPressed(Input.Keys.W))
                 light.setActive(!light.isActive());
         }
+    }
+
+    public void turnOnAmbientLight() {
+
+        rayHandler.setAmbientLight(.2f);
     }
 
     public void draw(OrthographicCamera camera) {

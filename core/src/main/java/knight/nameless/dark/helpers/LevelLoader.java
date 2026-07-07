@@ -223,6 +223,9 @@ public class LevelLoader {
 
         ScreenUtils.clear(Color.BLACK);
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F))
+            lightManager.turnOnAmbientLight();
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isDebugRendererActive = !isDebugRendererActive;
 

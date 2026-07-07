@@ -3,7 +3,6 @@ package knight.nameless.dark.screens;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.ScreenUtils;
 import knight.nameless.dark.Dark;
 import knight.nameless.dark.helpers.AssetsHelper;
 import knight.nameless.dark.helpers.Constants;
@@ -24,7 +23,7 @@ public class GameScreen extends ScreenAdapter {
 
         camera = game.camera;
 
-        mapHelper = new LevelLoader("maps/playground.tmx");
+        mapHelper = new LevelLoader("maps/level0.tmx");
 
         music = AssetsHelper.loadMusic("peaceful.wav");
         music.play();
@@ -45,10 +44,7 @@ public class GameScreen extends ScreenAdapter {
 
         else {
 
-            ScreenUtils.clear(0, 0, 0, 0);
-
             mapHelper.update(deltaTime, camera);
-
             mapHelper.draw(camera);
         }
     }

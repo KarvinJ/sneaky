@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import knight.nameless.dark.screens.MainMenuScreen;
+import knight.nameless.dark.screens.PlayGroundScreen;
 
 import static knight.nameless.dark.helpers.Constants.PIXELS_PER_METER;
 
@@ -17,8 +17,8 @@ public class Dark extends Game {
     public OrthographicCamera camera;
     public AssetDescriptor<Skin> uiSkin;
     public Viewport viewport;
-    public int screenWidth = 960;
-    public int screenHeight = 544;
+    public int screenWidth = 640;
+    public int screenHeight = 360;
 
     public Dark() {
 
@@ -36,7 +36,7 @@ public class Dark extends Game {
             camera
         );
 
-        camera.zoom -= 0.4f;
+//        camera.zoom -= 0.4f;
 
         camera.position.set(screenWidth / 2f / PIXELS_PER_METER, screenHeight / 2f / PIXELS_PER_METER, 0);
 
@@ -44,6 +44,6 @@ public class Dark extends Game {
             "ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("ui/uiskin.atlas")
         );
 
-        setScreen(new MainMenuScreen());
+        setScreen(new PlayGroundScreen());
     }
 }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ScreenUtils;
 import knight.nameless.dark.objects.*;
 import knight.nameless.dark.objects.Box;
 import knight.nameless.dark.objects.structures.Checkpoint;
@@ -173,7 +174,7 @@ public class LevelLoader {
             isDebugCameraActive = !isDebugCameraActive;
 
         if (!isDebugCameraActive)
-            camera.position.set(player.getWorldPosition().x, 5.2f, 0);
+            camera.position.set(player.getWorldPosition().x, 5.8f, 0);
 
         controlCameraPosition(camera);
 
@@ -217,6 +218,8 @@ public class LevelLoader {
     }
 
     public void draw(OrthographicCamera camera) {
+
+        ScreenUtils.clear(Color.BLACK);
 
         mapRenderer.setView(camera);
         mapRenderer.render();

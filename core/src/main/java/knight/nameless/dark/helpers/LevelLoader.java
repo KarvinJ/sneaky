@@ -3,7 +3,6 @@ package knight.nameless.dark.helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -18,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import knight.nameless.dark.Dark;
 import knight.nameless.dark.objects.*;
 import knight.nameless.dark.objects.Box;
 import knight.nameless.dark.objects.structures.Checkpoint;
@@ -29,6 +29,7 @@ import static knight.nameless.dark.helpers.GameDataHelper.savePlayerPosition;
 
 public class LevelLoader {
 
+    private final Dark game;
     private final TiledMap tiledMap;
     private final TextureAtlas atlas;
     private final World world;
@@ -38,13 +39,15 @@ public class LevelLoader {
     private final LightManager lightManager;
     private float lightsTimer;
     private float accumulator;
-    public boolean isDebugCameraActive;
+    private boolean isDebugCameraActive;
+    private boolean isDebugRendererActive;
     private final Array<GameObject> gameObjects;
     private final Array<Checkpoint> checkpoints;
     private final Array<LightStructure> lightStructures;
 
-    public LevelLoader(String mapFilePath) {
+    public LevelLoader(String mapFilePath, Dark game) {
 
+        this.game = game;
         tiledMap = new TmxMapLoader().load(mapFilePath);
         atlas = new TextureAtlas("images/test.atlas");
 
@@ -145,48 +148,46 @@ public class LevelLoader {
         );
     }
 
-    private void controlCameraPosition(OrthographicCamera camera) {
+    private void controlCameraPosition() {
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            camera.position.x += 0.5f;
+            game.camera.position.x += 0.5f;
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            camera.position.x -= 0.5f;
+            game.camera.position.x -= 0.5f;
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            camera.position.y += 0.5f;
+            game.camera.position.y += 0.5f;
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            camera.position.y -= 0.5f;
+            game.camera.position.y -= 0.5f;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
-            camera.zoom += 0.1f;
+        if (Gdx.input.isKeyPressed(Input.Keys.F3))
+            game.camera.zoom += 0.05f;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
-            camera.zoom -= 0.1f;
+        if (Gdx.input.isKeyPressed(Input.Keys.F4))
+            game.camera.zoom -= 0.05f;
     }
 
-    public void update(float deltaTime, OrthographicCamera camera) {
+    public void update(float deltaTime) {
 
         player.update(deltaTime);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F5))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
             isDebugCameraActive = !isDebugCameraActive;
 
-        if (!isDebugCameraActive)
-            camera.position.set(player.getWorldPosition().x, 5.8f, 0);
+        if (isDebugCameraActive)
+            controlCameraPosition();
+        else
+            game.camera.position.set(player.getWorldPosition().x, 5.8f, 0);
 
-        controlCameraPosition(camera);
-
-        camera.update();
+        game.camera.update();
 
         for (GameObject gameObject : gameObjects)
             gameObject.update(deltaTime);
 
         for (Checkpoint checkpoint : checkpoints)
             checkpoint.update(deltaTime);
-
-        lightsTimer += deltaTime;
 
         for (LightStructure lightStructure : lightStructures) {
 
@@ -196,9 +197,10 @@ public class LevelLoader {
 
         lightManager.update(lightsTimer, player);
 
-        if (lightsTimer > 1.5f) {
+        lightsTimer += deltaTime;
+
+        if (lightsTimer > 1.5f)
             lightsTimer = 0;
-        }
 
         doPhysicsTimeStep(deltaTime);
     }
@@ -217,14 +219,25 @@ public class LevelLoader {
         }
     }
 
-    public void draw(OrthographicCamera camera) {
+    public void draw() {
 
         ScreenUtils.clear(Color.BLACK);
 
-        mapRenderer.setView(camera);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
+            isDebugRendererActive = !isDebugRendererActive;
+
+        if (isDebugRendererActive)
+            debugRenderer.render(world, game.camera.combined);
+        else
+            render();
+    }
+
+    private void render() {
+
+        mapRenderer.setView(game.camera);
         mapRenderer.render();
 
-        mapRenderer.getBatch().setProjectionMatrix(camera.combined);
+        mapRenderer.getBatch().setProjectionMatrix(game.camera.combined);
 
         mapRenderer.getBatch().begin();
 
@@ -238,9 +251,7 @@ public class LevelLoader {
 
         mapRenderer.getBatch().end();
 
-        lightManager.draw(camera);
-
-//        debugRenderer.render(world, camera.combined);
+        lightManager.draw(game.camera);
     }
 
     public void dispose() {

@@ -19,7 +19,7 @@ public class PlayGroundScreen extends ScreenAdapter {
 
         game = Dark.INSTANCE;
 
-        mapHelper = new LevelLoader("maps/playground.tmx");
+        mapHelper = new LevelLoader("maps/playground.tmx", game);
 
         music = AssetsHelper.loadMusic("peaceful.wav");
         music.play();
@@ -34,8 +34,8 @@ public class PlayGroundScreen extends ScreenAdapter {
     @Override
     public void render(float deltaTime) {
 
-        mapHelper.update(deltaTime, game.camera);
-        mapHelper.draw(game.camera);
+        mapHelper.update(deltaTime);
+        mapHelper.draw();
     }
 
     @Override

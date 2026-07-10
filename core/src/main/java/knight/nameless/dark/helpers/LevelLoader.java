@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.nameless.dark.Dark;
 import knight.nameless.dark.objects.*;
-import knight.nameless.dark.objects.Box;
 import knight.nameless.dark.objects.structures.Checkpoint;
 import knight.nameless.dark.objects.structures.FinishDoor;
 import knight.nameless.dark.objects.structures.LightStructure;
@@ -121,12 +120,8 @@ public class LevelLoader {
                     new FinishDoor(mapRectangle, world);
                     break;
 
-                case "Boxes":
-                    gameObjects.add(new Box(mapRectangle, world));
-                    break;
-
                 case "Enemy-Stopper":
-                    Box2DHelper.createFixture(new Box2DBody(mapRectangle, world, null));
+                    Box2DHelper.createFixture(new Box2DBody(mapRectangle,0, world, null));
                     break;
 
                 case "Light-Collisions":
@@ -134,7 +129,7 @@ public class LevelLoader {
                     break;
 
                 default:
-                    Box2DHelper.createBody(new Box2DBody(mapRectangle, world, null));
+                    Box2DHelper.createBody(new Box2DBody(mapRectangle,0, world, null));
                     break;
             }
         }

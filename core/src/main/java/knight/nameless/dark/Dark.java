@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import knight.nameless.dark.screens.GameScreen;
 import knight.nameless.dark.screens.PlayGroundScreen;
 
 import static knight.nameless.dark.helpers.Constants.PIXELS_PER_METER;
@@ -44,6 +45,6 @@ public class Dark extends Game {
             "ui/uiskin.json", Skin.class, new SkinLoader.SkinParameter("ui/uiskin.atlas")
         );
 
-        setScreen(new PlayGroundScreen());
+        setScreen(new GameScreen());
     }
 }

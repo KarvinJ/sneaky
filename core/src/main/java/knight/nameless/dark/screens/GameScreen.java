@@ -19,7 +19,7 @@ public class GameScreen extends ScreenAdapter {
 
         game = Dark.INSTANCE;
 
-        mapHelper = new LevelLoader("maps/level0.tmx", game);
+        mapHelper = new LevelLoader("maps/level2.tmx", game);
 
         music = AssetsHelper.loadMusic("peaceful.wav");
         music.play();

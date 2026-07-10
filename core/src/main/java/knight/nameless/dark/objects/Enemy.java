@@ -3,7 +3,6 @@ package knight.nameless.dark.objects;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -24,13 +23,8 @@ public class Enemy extends GameObject {
     private boolean isDestroyed;
     private final Sound hitSound;
 
-    public Enemy(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
-        super(
-            bounds, world,
-            new TextureRegion(
-                region, 0, 0, region.getRegionWidth() / totalFrames, region.getRegionHeight()
-            )
-        );
+    public Enemy(Rectangle bounds, World world, TextureRegion region, int totalFrames) {
+        super(bounds, world, region);
 
         movingAnimation = makeAnimation(region, totalFrames, 0.5f);
 

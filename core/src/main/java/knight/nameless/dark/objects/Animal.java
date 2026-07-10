@@ -16,13 +16,8 @@ public class Animal extends GameObject {
     private final Animation<TextureRegion> animation;
     private float animationTimer;
 
-    public Animal(Rectangle bounds, World world, TextureAtlas.AtlasRegion region, int totalFrames) {
-        super(
-            bounds, world,
-            new TextureRegion(
-                region, 0, 0, region.getRegionWidth() / totalFrames, region.getRegionHeight()
-            )
-        );
+    public Animal(Rectangle bounds, World world, TextureRegion region, int totalFrames) {
+        super(bounds, world, region);
 
         animation = makeAnimation(region, totalFrames, 0.2f);
     }

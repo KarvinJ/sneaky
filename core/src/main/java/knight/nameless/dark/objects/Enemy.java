@@ -2,7 +2,6 @@ package knight.nameless.dark.objects;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -19,8 +18,6 @@ public class Enemy extends GameObject {
     private final Animation<TextureRegion> movingAnimation;
     private float animationTimer;
     public boolean isMovingRight;
-    private boolean setToDestroy;
-    private boolean isDestroyed;
     private final Sound hitSound;
 
     public Enemy(Rectangle bounds, World world, TextureRegion region, int totalFrames) {
@@ -39,39 +36,21 @@ public class Enemy extends GameObject {
         );
     }
 
-
-    private void destroyBody() {
-
-        actualWorld.destroyBody(body);
-        isDestroyed = true;
-    }
-
     @Override
     protected void childUpdate(float deltaTime) {
 
         animationTimer += deltaTime;
 
-        if (setToDestroy && !isDestroyed)
-            destroyBody();
+        actualRegion = movingAnimation.getKeyFrame(animationTimer, true);
 
-        else if (!isDestroyed) {
+        flipRegionOnXAxis(actualRegion);
 
-            actualRegion = movingAnimation.getKeyFrame(animationTimer, true);
+        if (isMovingRight && body.getLinearVelocity().x <= 4)
+            applyLinealImpulse(new Vector2(2, 0));
 
-            flipRegionOnXAxis(actualRegion);
+        else if (!isMovingRight && body.getLinearVelocity().x >= -4)
+            applyLinealImpulse(new Vector2(-2, 0));
 
-            if (isMovingRight && body.getLinearVelocity().x <= 4)
-                applyLinealImpulse(new Vector2(2, 0));
-
-            else if (!isMovingRight && body.getLinearVelocity().x >= -4)
-                applyLinealImpulse(new Vector2(-2, 0));
-        }
-    }
-
-    @Override
-    public void draw(Batch batch) {
-        if (!isDestroyed)
-            super.draw(batch);
     }
 
     private void flipRegionOnXAxis(TextureRegion region) {
@@ -87,13 +66,8 @@ public class Enemy extends GameObject {
         }
     }
 
-    public void changeDirection(){
+    public void changeDirection() {
         isMovingRight = !isMovingRight;
-    }
-
-    public void hitByPlayer() {
-        hitSound.play();
-        setToDestroy = true;
     }
 
     @Override

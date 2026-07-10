@@ -190,9 +190,9 @@ public class LevelLoader {
             lightStructure.update();
         }
 
-        lightManager.update(lightsTimer, player);
-
         lightsTimer += deltaTime;
+
+        lightManager.update(lightsTimer, player);
 
         if (lightsTimer > 1.5f)
             lightsTimer = 0;
